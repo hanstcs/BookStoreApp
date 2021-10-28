@@ -107,4 +107,12 @@ public class DataStore {
                 })
                 .collect(Collectors.toList());
     }
+
+    public CustomerModel getCustomerData(String username) {
+        UserModel user = findUserByUserName(username);
+        if (user instanceof CustomerModel)
+            return (CustomerModel) user;
+
+        return null;
+    }
 }

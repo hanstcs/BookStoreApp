@@ -29,6 +29,7 @@ public class Presenter {
             toLogin();
             return;
         }
+        userAuth.setSession(userData);
         if (userAuth.isAdmin(userData)) {
             toAdminPage();
             return;
@@ -67,7 +68,8 @@ public class Presenter {
             int bookId = scanner.nextInt();
             view.showQtyForm();
             int qty = scanner.nextInt();
-            dataStore.orderBook(null, bookId, qty);
+            CustomerModel customerData = dataStore.getCustomerData(userAuth.getUserSession().getUsername());
+            dataStore.orderBook(customerData, bookId, qty);
             toCustomerPage();
         }
     }
