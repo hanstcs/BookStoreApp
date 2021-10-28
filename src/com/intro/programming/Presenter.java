@@ -49,6 +49,10 @@ public class Presenter {
             addNewBook();
             toAdminPage();
         }
+        if (choice == 3) {
+            updateBookData();
+            toAdminPage();
+        }
     }
 
     public void toCustomerPage() {
@@ -71,5 +75,38 @@ public class Presenter {
     private void addNewBook() {
         BookQtyModel bookQty = view.showAddNewBookForm();
         dataStore.addNewBook(bookQty);
+    }
+
+    private void updateBookData() {
+        view.showBooks(dataStore.getBookQtyList());
+        view.showPickUpdateBookForm();
+        int bookId = scanner.nextInt();
+        view.showUpdateBookForm();
+        int updateFieldChoice = scanner.nextInt();
+        scanner.nextLine();
+        BookModel book = dataStore.getBookById(bookId);
+        if (updateFieldChoice == 1) {
+            view.showTitleForm();
+            String title = scanner.nextLine();
+            book.setTitle(title);
+            dataStore.updateBook(bookId, book);
+        }
+        if (updateFieldChoice == 2) {
+            view.showAuthorForm();
+            String author = scanner.nextLine();
+            book.setAuthor(author);
+            dataStore.updateBook(bookId, book);
+        }
+        if (updateFieldChoice == 3) {
+            view.showIsbnForm();
+            String isbn = scanner.nextLine();
+            book.setIsbn(isbn);
+            dataStore.updateBook(bookId, book);
+        }
+        if (updateFieldChoice == 4) {
+            view.showQtyForm();
+            int qty = scanner.nextInt();
+            dataStore.updateBookQty(book, qty);
+        }
     }
 }

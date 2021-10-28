@@ -1,7 +1,7 @@
 package com.intro.programming.data;
 
 public class BookQtyModel {
-    private final BookModel book;
+    private BookModel book;
     private int qty;
 
     public BookQtyModel(BookModel book, int qty) {
@@ -15,6 +15,10 @@ public class BookQtyModel {
 
     public int getQty() {
         return qty;
+    }
+
+    public void setBook(BookModel book) {
+        this.book = book;
     }
 
     public void setQty(int qty) {

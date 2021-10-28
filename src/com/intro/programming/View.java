@@ -68,4 +68,30 @@ public class View {
     public void showQtyForm() {
         System.out.print("Enter book qty : ");
     }
+
+    public void showTitleForm() {
+        System.out.print("Enter title : ");
+    }
+
+    public void showAuthorForm() {
+        System.out.print("Enter author : ");
+    }
+
+    public void showIsbnForm() {
+        System.out.print("Enter ISBN : ");
+    }
+
+    public void showPickUpdateBookForm() {
+        System.out.println("=== Update Book ===");
+        System.out.print("Enter book ID : ");
+    }
+
+    public void showUpdateBookForm() {
+        System.out.println("Select field you want to update\n" +
+                "1. Title\n" +
+                "2. Author\n" +
+                "3. ISBN\n" +
+                "4. Quantity\n" +
+                "0. Cancel");
+    }
 }

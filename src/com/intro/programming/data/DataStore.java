@@ -67,7 +67,7 @@ public class DataStore {
     }
 
     public void orderBook(CustomerModel customer, int bookId, int qty) {
-        BookModel book = bookList.get(bookId - 1);
+        BookModel book = getBookById(bookId);
         bookSaleList.add(new BookSaleModel(
                 new BookQtyModel(book, qty),
                 customer,
@@ -76,11 +76,34 @@ public class DataStore {
         decreaseBookQty(book, qty);
     }
 
+    public BookModel getBookById(int bookId) {
+        return bookList.get(bookId - 1);
+    }
+
     public void decreaseBookQty(BookModel book, int qty) {
         this.bookQtyList = bookQtyList.stream()
                 .peek(bookQty -> {
                     if (bookQty.getBook().getIsbn().equals(book.getIsbn()))
                         bookQty.setQty(bookQty.getQty() - qty);
+                })
+                .collect(Collectors.toList());
+    }
+
+    public void updateBookQty(BookModel book, int qty) {
+        this.bookQtyList = bookQtyList.stream()
+                .peek(bookQty -> {
+                    if (bookQty.getBook().getIsbn().equals(book.getIsbn()))
+                        bookQty.setQty(qty);
+                })
+                .collect(Collectors.toList());
+    }
+
+    public void updateBook(int bookId, BookModel updatedBook) {
+        BookModel previousBookData = getBookById(bookId);
+        this.bookQtyList = bookQtyList.stream()
+                .peek(bookQty -> {
+                    if (bookQty.getBook().getIsbn().equals(previousBookData.getIsbn()))
+                        bookQty.setBook(updatedBook);
                 })
                 .collect(Collectors.toList());
     }
