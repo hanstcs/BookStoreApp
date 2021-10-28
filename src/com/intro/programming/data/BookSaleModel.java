@@ -4,19 +4,19 @@ import java.util.Date;
 import java.util.List;
 
 public class BookSaleModel {
-    private final List<BookQtyModel> bookAndQtyList;
+    private final BookQtyModel bookAndQty;
     private final CustomerModel customer;
     private final Date saleDate;
 
-    public BookSaleModel(List<BookQtyModel> bookAndQtyList,
+    public BookSaleModel(BookQtyModel bookAndQty,
                          CustomerModel customer, Date saleDate) {
-        this.bookAndQtyList = bookAndQtyList;
+        this.bookAndQty = bookAndQty;
         this.customer = customer;
         this.saleDate = saleDate;
     }
 
-    public List<BookQtyModel> getBookAndQtyList() {
-        return bookAndQtyList;
+    public BookQtyModel getBookAndQty() {
+        return bookAndQty;
     }
 
     public CustomerModel getCustomer() {

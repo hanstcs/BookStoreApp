@@ -1,17 +1,21 @@
 package com.intro.programming.data;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DataStore {
     private List<BookModel> bookList;
     private List<UserModel> userList;
     private List<BookQtyModel> bookQtyList;
+    private List<BookSaleModel> bookSaleList;
 
     public DataStore() {
         this.bookList = getInitialBooks();
         this.userList = getInitialUsers();
         this.bookQtyList = getInitialBookQtyList();
+        this.bookSaleList = new ArrayList<>();
     }
 
     private List<BookModel> getInitialBooks() {
@@ -34,11 +38,50 @@ public class DataStore {
 
     private List<BookQtyModel> getInitialBookQtyList() {
         List<BookQtyModel> result = new ArrayList<>();
-        result.add(new BookQtyModel(getInitialBooks().get(1), 10));
-        result.add(new BookQtyModel(getInitialBooks().get(2), 2));
-        result.add(new BookQtyModel(getInitialBooks().get(3), 5));
+        result.add(new BookQtyModel(getInitialBooks().get(0), 10));
+        result.add(new BookQtyModel(getInitialBooks().get(1), 2));
+        result.add(new BookQtyModel(getInitialBooks().get(2), 5));
+        result.add(new BookQtyModel(getInitialBooks().get(3), 10));
         result.add(new BookQtyModel(getInitialBooks().get(4), 10));
-        result.add(new BookQtyModel(getInitialBooks().get(5), 10));
         return result;
+    }
+
+    public List<BookQtyModel> getBookQtyList() {
+        return bookQtyList;
+    }
+
+    public List<UserModel> getUserList() {
+        return userList;
+    }
+
+    public UserModel findUserByUserName(String username) {
+        return userList.stream()
+                .filter(user -> user.getUsername().equals(username))
+                .findFirst()
+                .get();
+    }
+
+    public void addNewBook(BookQtyModel bookQty) {
+        bookQtyList.add(bookQty);
+        bookList.add(bookQty.getBook());
+    }
+
+    public void orderBook(CustomerModel customer, int bookId, int qty) {
+        BookModel book = bookList.get(bookId - 1);
+        bookSaleList.add(new BookSaleModel(
+                new BookQtyModel(book, qty),
+                customer,
+                new Date()
+        ));
+        decreaseBookQty(book, qty);
+    }
+
+    public void decreaseBookQty(BookModel book, int qty) {
+        this.bookQtyList = bookQtyList.stream()
+                .peek(bookQty -> {
+                    if (bookQty.getBook().getIsbn().equals(book.getIsbn()))
+                        bookQty.setQty(bookQty.getQty() - qty);
+                })
+                .collect(Collectors.toList());
     }
 }

@@ -2,7 +2,7 @@ package com.intro.programming.data;
 
 public class BookQtyModel {
     private final BookModel book;
-    private final int qty;
+    private int qty;
 
     public BookQtyModel(BookModel book, int qty) {
         this.book = book;
@@ -17,9 +17,13 @@ public class BookQtyModel {
         return qty;
     }
 
+    public void setQty(int qty) {
+        this.qty = qty;
+    }
+
     @Override
     public String toString() {
         return "Book Detail \n" + book +
-                "\nQuantity : " + qty;
+                "Quantity : " + qty;
     }
 }
